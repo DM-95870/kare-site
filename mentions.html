@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kare — Legal · Mentions légales</title><style>
+:root { --fond: #f4f4f6; --carte: #fff; --texte: #111; --doux: #555; --trait: #111; }
+@media (prefers-color-scheme: dark) { :root { --fond: #0d0d10; --carte: #18181c; --texte: #f2f2f2; --doux: #b0b0b8; --trait: #f2f2f2; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fond); color: var(--texte); font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 40px 16px 64px; }
+header { display: flex; align-items: center; gap: 18px; margin-bottom: 28px; }
+.icone { width: 72px; height: 72px; background: var(--carte); border: 3px solid var(--trait); border-radius: 18px; padding: 8px; box-shadow: 5px 5px 0 var(--trait); color: var(--texte); }
+h1 { font-family: "New York", Georgia, serif; font-size: 44px; margin: 0; line-height: 1.1; }
+.slogan { margin: 2px 0 0; color: var(--doux); }
+nav { margin: 0 0 28px; font-size: 15px; }
+nav a { color: var(--texte); margin-right: 14px; }
+section { background: var(--carte); border: 2px solid var(--trait); box-shadow: 5px 5px 0 var(--trait); padding: 22px 26px; margin: 0 0 26px; }
+h2 { font-family: "New York", Georgia, serif; font-size: 28px; margin: 0 0 6px; }
+h3 { font-size: 17px; margin: 22px 0 4px; }
+p, li { margin: 6px 0; }
+kbd { font: 600 15px -apple-system, sans-serif; border: 1.5px solid var(--trait); border-radius: 5px; padding: 0 5px; }
+.date { color: var(--doux); font-size: 14px; }
+a { color: inherit; }
+.js section[lang] { display: none; }
+.js[data-l="en"] section[lang="en"] { display: block; }
+.js[data-l="en"] nav a[data-l="en"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="fr"] section[lang="fr"] { display: block; }
+.js[data-l="fr"] nav a[data-l="fr"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="de"] section[lang="de"] { display: block; }
+.js[data-l="de"] nav a[data-l="de"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="es"] section[lang="es"] { display: block; }
+.js[data-l="es"] nav a[data-l="es"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="it"] section[lang="it"] { display: block; }
+.js[data-l="it"] nav a[data-l="it"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="pt-BR"] section[lang="pt-BR"] { display: block; }
+.js[data-l="pt-BR"] nav a[data-l="pt-BR"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="nl"] section[lang="nl"] { display: block; }
+.js[data-l="nl"] nav a[data-l="nl"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="ja"] section[lang="ja"] { display: block; }
+.js[data-l="ja"] nav a[data-l="ja"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="zh-Hans"] section[lang="zh-Hans"] { display: block; }
+.js[data-l="zh-Hans"] nav a[data-l="zh-Hans"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="ko"] section[lang="ko"] { display: block; }
+.js[data-l="ko"] nav a[data-l="ko"] { font-weight: 700; text-decoration: underline; }
+
+nav a[data-l] { cursor: pointer; }
+.langues { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.accroche { font-size: 22px; line-height: 1.4; margin: 0 0 18px; }
+.bouton { display: inline-block; padding: 10px 22px; border: 2px solid var(--trait); border-radius: 8px; background: var(--texte); color: var(--fond); text-decoration: none; font-weight: 600; box-shadow: 4px 4px 0 var(--trait); }
+.bouton.off { background: var(--carte); color: var(--doux); }
+.fonctions { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-top: 10px; }
+.fonctions div { border: 1.5px solid var(--trait); padding: 12px 14px; }
+.fonctions b { display: block; margin-bottom: 2px; }
+img.vue { width: 100%; height: auto; border: 2px solid var(--trait); box-shadow: 5px 5px 0 var(--trait); margin: 14px 0 6px; }
+footer { color: var(--doux); font-size: 14px; }
+</style><script>
+(function () {
+  var codes = ["en", "fr", "de", "es", "it", "pt-BR", "nl", "ja", "zh-Hans", "ko"], d = document.documentElement, l = null;
+  try { l = localStorage.getItem('kare-langue'); } catch (e) {}
+  if (codes.indexOf(l) < 0) {
+    var n = ((navigator.languages && navigator.languages[0]) || navigator.language || 'en').toLowerCase();
+    l = 'en';
+    if (n.slice(0, 2) === 'zh') { if (!/hant|-tw|-hk|-mo/.test(n)) l = 'zh-Hans'; }
+    else if (n.slice(0, 2) === 'pt') l = 'pt-BR';
+    else if (codes.indexOf(n.slice(0, 2)) >= 0) l = n.slice(0, 2);
+  }
+  var h = (location.hash || '').replace('#', '');
+  if (codes.indexOf(h) >= 0) l = h;
+  d.classList.add('js'); d.setAttribute('data-l', l); d.lang = l;
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[data-l]');
+    if (!a) return;
+    e.preventDefault();
+    var x = a.getAttribute('data-l'); d.setAttribute('data-l', x); d.lang = x;
+    try { localStorage.setItem('kare-langue', x); } catch (e2) {}
+  });
+})();
+</script></head>
+<body><main>
+<header><svg class="icone" viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges"><g fill="currentColor"><rect x="10" y="6" width="1" height="1"/><rect x="11" y="6" width="1" height="1"/><rect x="12" y="6" width="1" height="1"/><rect x="13" y="6" width="1" height="1"/><rect x="14" y="6" width="1" height="1"/><rect x="15" y="6" width="1" height="1"/><rect x="16" y="6" width="1" height="1"/><rect x="17" y="6" width="1" height="1"/><rect x="18" y="6" width="1" height="1"/><rect x="19" y="6" width="1" height="1"/><rect x="9" y="7" width="1" height="1"/><rect x="20" y="7" width="1" height="1"/><rect x="4" y="8" width="1" height="1"/><rect x="5" y="8" width="1" height="1"/><rect x="6" y="8" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/><rect x="9" y="8" width="1" height="1"/><rect x="20" y="8" width="1" height="1"/><rect x="4" y="9" width="1" height="1"/><rect x="5" y="9" width="1" height="1"/><rect x="6" y="9" width="1" height="1"/><rect x="7" y="9" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/><rect x="20" y="9" width="1" height="1"/><rect x="3" y="10" width="1" height="1"/><rect x="4" y="10" width="1" height="1"/><rect x="5" y="10" width="1" height="1"/><rect x="6" y="10" width="1" height="1"/><rect x="7" y="10" width="1" height="1"/><rect x="8" y="10" width="1" height="1"/><rect x="9" y="10" width="1" height="1"/><rect x="10" y="10" width="1" height="1"/><rect x="11" y="10" width="1" height="1"/><rect x="12" y="10" width="1" height="1"/><rect x="13" y="10" width="1" height="1"/><rect x="14" y="10" width="1" height="1"/><rect x="15" y="10" width="1" height="1"/><rect x="16" y="10" width="1" height="1"/><rect x="17" y="10" width="1" height="1"/><rect x="18" y="10" width="1" height="1"/><rect x="19" y="10" width="1" height="1"/><rect x="20" y="10" width="1" height="1"/><rect x="21" y="10" width="1" height="1"/><rect x="22" y="10" width="1" height="1"/><rect x="23" y="10" width="1" height="1"/><rect x="24" y="10" width="1" height="1"/><rect x="25" y="10" width="1" height="1"/><rect x="26" y="10" width="1" height="1"/><rect x="27" y="10" width="1" height="1"/><rect x="28" y="10" width="1" height="1"/><rect x="2" y="11" width="1" height="1"/><rect x="29" y="11" width="1" height="1"/><rect x="2" y="12" width="1" height="1"/><rect x="12" y="12" width="1" height="1"/><rect x="13" y="12" width="1" height="1"/><rect x="14" y="12" width="1" height="1"/><rect x="15" y="12" width="1" height="1"/><rect x="16" y="12" width="1" height="1"/><rect x="17" y="12" width="1" height="1"/><rect x="18" y="12" width="1" height="1"/><rect x="19" y="12" width="1" height="1"/><rect x="24" y="12" width="1" height="1"/><rect x="25" y="12" width="1" height="1"/><rect x="26" y="12" width="1" height="1"/><rect x="27" y="12" width="1" height="1"/><rect x="29" y="12" width="1" height="1"/><rect x="2" y="13" width="1" height="1"/><rect x="4" y="13" width="1" height="1"/><rect x="5" y="13" width="1" height="1"/><rect x="11" y="13" width="1" height="1"/><rect x="12" y="13" width="1" height="1"/><rect x="13" y="13" width="1" height="1"/><rect x="14" y="13" width="1" height="1"/><rect x="17" y="13" width="1" height="1"/><rect x="18" y="13" width="1" height="1"/><rect x="19" y="13" width="1" height="1"/><rect x="20" y="13" width="1" height="1"/><rect x="24" y="13" width="1" height="1"/><rect x="27" y="13" width="1" height="1"/><rect x="29" y="13" width="1" height="1"/><rect x="2" y="14" width="1" height="1"/><rect x="4" y="14" width="1" height="1"/><rect x="10" y="14" width="1" height="1"/><rect x="11" y="14" width="1" height="1"/><rect x="12" y="14" width="1" height="1"/><rect x="19" y="14" width="1" height="1"/><rect x="20" y="14" width="1" height="1"/><rect x="21" y="14" width="1" height="1"/><rect x="24" y="14" width="1" height="1"/><rect x="25" y="14" width="1" height="1"/><rect x="26" y="14" width="1" height="1"/><rect x="27" y="14" width="1" height="1"/><rect x="29" y="14" width="1" height="1"/><rect x="2" y="15" width="1" height="1"/><rect x="4" y="15" width="1" height="1"/><rect x="5" y="15" width="1" height="1"/><rect x="9" y="15" width="1" height="1"/><rect x="10" y="15" width="1" height="1"/><rect x="11" y="15" width="1" height="1"/><rect x="20" y="15" width="1" height="1"/><rect x="21" y="15" width="1" height="1"/><rect x="22" y="15" width="1" height="1"/><rect x="29" y="15" width="1" height="1"/><rect x="2" y="16" width="1" height="1"/><rect x="4" y="16" width="1" height="1"/><rect x="9" y="16" width="1" height="1"/><rect x="10" y="16" width="1" height="1"/><rect x="13" y="16" width="1" height="1"/><rect x="14" y="16" width="1" height="1"/><rect x="15" y="16" width="1" height="1"/><rect x="16" y="16" width="1" height="1"/><rect x="17" y="16" width="1" height="1"/><rect x="21" y="16" width="1" height="1"/><rect x="22" y="16" width="1" height="1"/><rect x="29" y="16" width="1" height="1"/><rect x="2" y="17" width="1" height="1"/><rect x="4" y="17" width="1" height="1"/><rect x="5" y="17" width="1" height="1"/><rect x="9" y="17" width="1" height="1"/><rect x="10" y="17" width="1" height="1"/><rect x="13" y="17" width="1" height="1"/><rect x="18" y="17" width="1" height="1"/><rect x="21" y="17" width="1" height="1"/><rect x="22" y="17" width="1" height="1"/><rect x="29" y="17" width="1" height="1"/><rect x="2" y="18" width="1" height="1"/><rect x="4" y="18" width="1" height="1"/><rect x="9" y="18" width="1" height="1"/><rect x="13" y="18" width="1" height="1"/><rect x="18" y="18" width="1" height="1"/><rect x="22" y="18" width="1" height="1"/><rect x="29" y="18" width="1" height="1"/><rect x="2" y="19" width="1" height="1"/><rect x="4" y="19" width="1" height="1"/><rect x="5" y="19" width="1" height="1"/><rect x="9" y="19" width="1" height="1"/><rect x="13" y="19" width="1" height="1"/><rect x="18" y="19" width="1" height="1"/><rect x="22" y="19" width="1" height="1"/><rect x="29" y="19" width="1" height="1"/><rect x="2" y="20" width="1" height="1"/><rect x="4" y="20" width="1" height="1"/><rect x="9" y="20" width="1" height="1"/><rect x="10" y="20" width="1" height="1"/><rect x="13" y="20" width="1" height="1"/><rect x="18" y="20" width="1" height="1"/><rect x="21" y="20" width="1" height="1"/><rect x="22" y="20" width="1" height="1"/><rect x="29" y="20" width="1" height="1"/><rect x="2" y="21" width="1" height="1"/><rect x="4" y="21" width="1" height="1"/><rect x="5" y="21" width="1" height="1"/><rect x="9" y="21" width="1" height="1"/><rect x="10" y="21" width="1" height="1"/><rect x="14" y="21" width="1" height="1"/><rect x="15" y="21" width="1" height="1"/><rect x="16" y="21" width="1" height="1"/><rect x="17" y="21" width="1" height="1"/><rect x="21" y="21" width="1" height="1"/><rect x="22" y="21" width="1" height="1"/><rect x="29" y="21" width="1" height="1"/><rect x="2" y="22" width="1" height="1"/><rect x="4" y="22" width="1" height="1"/><rect x="9" y="22" width="1" height="1"/><rect x="10" y="22" width="1" height="1"/><rect x="11" y="22" width="1" height="1"/><rect x="20" y="22" width="1" height="1"/><rect x="21" y="22" width="1" height="1"/><rect x="22" y="22" width="1" height="1"/><rect x="29" y="22" width="1" height="1"/><rect x="2" y="23" width="1" height="1"/><rect x="4" y="23" width="1" height="1"/><rect x="5" y="23" width="1" height="1"/><rect x="10" y="23" width="1" height="1"/><rect x="11" y="23" width="1" height="1"/><rect x="12" y="23" width="1" height="1"/><rect x="19" y="23" width="1" height="1"/><rect x="20" y="23" width="1" height="1"/><rect x="21" y="23" width="1" height="1"/><rect x="29" y="23" width="1" height="1"/><rect x="2" y="24" width="1" height="1"/><rect x="4" y="24" width="1" height="1"/><rect x="11" y="24" width="1" height="1"/><rect x="12" y="24" width="1" height="1"/><rect x="13" y="24" width="1" height="1"/><rect x="14" y="24" width="1" height="1"/><rect x="17" y="24" width="1" height="1"/><rect x="18" y="24" width="1" height="1"/><rect x="19" y="24" width="1" height="1"/><rect x="20" y="24" width="1" height="1"/><rect x="29" y="24" width="1" height="1"/><rect x="2" y="25" width="1" height="1"/><rect x="12" y="25" width="1" height="1"/><rect x="13" y="25" width="1" height="1"/><rect x="14" y="25" width="1" height="1"/><rect x="15" y="25" width="1" height="1"/><rect x="16" y="25" width="1" height="1"/><rect x="17" y="25" width="1" height="1"/><rect x="18" y="25" width="1" height="1"/><rect x="19" y="25" width="1" height="1"/><rect x="29" y="25" width="1" height="1"/><rect x="2" y="26" width="1" height="1"/><rect x="29" y="26" width="1" height="1"/><rect x="3" y="27" width="1" height="1"/><rect x="4" y="27" width="1" height="1"/><rect x="5" y="27" width="1" height="1"/><rect x="6" y="27" width="1" height="1"/><rect x="7" y="27" width="1" height="1"/><rect x="8" y="27" width="1" height="1"/><rect x="9" y="27" width="1" height="1"/><rect x="10" y="27" width="1" height="1"/><rect x="11" y="27" width="1" height="1"/><rect x="12" y="27" width="1" height="1"/><rect x="13" y="27" width="1" height="1"/><rect x="14" y="27" width="1" height="1"/><rect x="15" y="27" width="1" height="1"/><rect x="16" y="27" width="1" height="1"/><rect x="17" y="27" width="1" height="1"/><rect x="18" y="27" width="1" height="1"/><rect x="19" y="27" width="1" height="1"/><rect x="20" y="27" width="1" height="1"/><rect x="21" y="27" width="1" height="1"/><rect x="22" y="27" width="1" height="1"/><rect x="23" y="27" width="1" height="1"/><rect x="24" y="27" width="1" height="1"/><rect x="25" y="27" width="1" height="1"/><rect x="26" y="27" width="1" height="1"/><rect x="27" y="27" width="1" height="1"/><rect x="28" y="27" width="1" height="1"/></g></svg><div><h1>Kare</h1><p class="slogan">Capture, with care.</p></div></header>
+<nav class="langues"><a href="#en" data-l="en">English</a><a href="#fr" data-l="fr">Français</a><a href="#de" data-l="de">Deutsch</a><a href="#es" data-l="es">Español</a><a href="#it" data-l="it">Italiano</a><a href="#pt-BR" data-l="pt-BR">Português</a><a href="#nl" data-l="nl">Nederlands</a><a href="#ja" data-l="ja">日本語</a><a href="#zh-Hans" data-l="zh-Hans">简体中文</a><a href="#ko" data-l="ko">한국어</a></nav>
+<nav></nav>
+<section id="en" lang="en">
+<h2>Legal notice and terms of sale</h2>
+<p class="date">Last updated: 12 November 2026. French law applies; this page is also available in French.</p>
+<h3>Publisher and seller</h3>
+<p>Kare is operated by David Mouriau, sole trader, SIRET 825 375 173 00028, address provided to the host and available on request. Contact: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Publication director: David Mouriau.</p>
+<p>Website host: GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+<h3>Product and price</h3>
+<p>The sale is of a lifetime licence to use Kare for Mac (macOS 14 or later, Apple silicon) for <b>1 €</b>. VAT not applicable (art. 293 B of the French Tax Code). A free 14-day trial is offered before any purchase. Updates to version 1 are included.</p>
+<h3>Order and payment</h3>
+<p>Payment is made online by card through Stripe, which processes the payment data; the seller does not keep it. The order is concluded on payment.</p>
+<h3>Delivery</h3>
+<p>The licence key is sent by e-mail to the address given at checkout within 48 hours. Enter it in “Activate Kare…” in the app's menu.</p>
+<h3>Licence</h3>
+<p>The licence is personal: it allows its holder to use Kare on their own Macs. The key must not be shared or resold. Kare sends no data and checks the key without an internet connection.</p>
+<h3>Right of withdrawal and refunds</h3>
+<p>As this is digital content supplied immediately, the statutory 14-day right of withdrawal does not apply once the buyer has agreed to immediate performance. As a goodwill gesture, the seller refunds on simple request by e-mail within 14 days of purchase.</p>
+<h3>Statutory guarantees</h3>
+<p>The seller remains bound by the statutory guarantee of conformity for digital content, regardless of any commercial guarantee.</p>
+<h3>Personal data</h3>
+<p>The buyer's e-mail address is used only to send the key and answer requests; it is kept for accounting for the statutory period. To exercise your rights of access, rectification or erasure: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. See also the app's privacy policy.</p>
+<h3>Mediation and disputes</h3>
+<p>In case of dispute, you may use the free services of the consumer mediator: CM2C – Centre de la Médiation de la Consommation de Conciliateurs de Justice, 14 rue Saint-Jean de Beauregard, 91400 Orsay – cm2c.net. French law applies.</p>
+<p class="date"><a href="index.html">Home</a> · <a href="assistance.html">Support</a> · <a href="confidentialite.html">Privacy</a></p>
+</section>
+<section id="fr" lang="fr">
+<h2>Mentions légales et conditions de vente</h2>
+<p class="date">Dernière mise à jour : 12 novembre 2026.</p>
+<h3>Éditeur et vendeur</h3>
+<p>Kare est exploité par David Mouriau, entrepreneur individuel, SIRET 825 375 173 00028, adresse communiquée à l'hébergeur et fournie sur simple demande. Contact : <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Directeur de la publication : David Mouriau.</p>
+<p>Hébergeur du site : GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</p>
+<h3>Produit et prix</h3>
+<p>La vente porte sur une licence d'utilisation à vie du logiciel Kare pour Mac (macOS 14 ou plus récent, puce Apple), au prix de <b>1 €</b>. TVA non applicable, art. 293 B du CGI. Un essai gratuit de 14 jours est proposé avant tout achat. Les mises à jour de la version 1 sont incluses.</p>
+<h3>Commande et paiement</h3>
+<p>Le paiement se fait en ligne par carte bancaire, par l'intermédiaire de Stripe, qui traite les données de paiement ; elles ne sont pas conservées par le vendeur. La commande est conclue au paiement.</p>
+<h3>Livraison</h3>
+<p>La clé de licence est envoyée par e-mail à l'adresse indiquée lors du paiement, dans un délai de 48 heures. Elle s'entre dans « Activer Kare… », dans le menu de l'app.</p>
+<h3>Licence</h3>
+<p>La licence est personnelle : elle permet d'utiliser Kare sur les Mac de son titulaire. La clé ne doit pas être partagée ni revendue. Kare n'envoie aucune donnée et vérifie la clé sans connexion à internet.</p>
+<h3>Droit de rétractation et remboursement</h3>
+<p>S'agissant d'un contenu numérique fourni immédiatement, le droit légal de rétractation de 14 jours ne s'applique pas dès lors que l'acheteur a accepté l'exécution immédiate du contrat. Par geste commercial, le vendeur rembourse sur simple demande par e-mail dans les 14 jours suivant l'achat.</p>
+<h3>Garanties légales</h3>
+<p>Le vendeur reste tenu de la garantie légale de conformité des contenus numériques, indépendamment de toute garantie commerciale.</p>
+<h3>Données personnelles</h3>
+<p>L'adresse e-mail de l'acheteur sert uniquement à lui envoyer sa clé et à répondre à ses demandes ; elle est conservée pour la comptabilité pendant la durée légale. Pour exercer vos droits d'accès, de rectification ou d'effacement : <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Voir aussi la politique de confidentialité de l'app.</p>
+<h3>Médiation et litiges</h3>
+<p>En cas de litige, vous pouvez recourir gratuitement au médiateur de la consommation : CM2C – Centre de la Médiation de la Consommation de Conciliateurs de Justice, 14 rue Saint-Jean de Beauregard, 91400 Orsay – cm2c.net. Le droit français est applicable.</p>
+<p class="date"><a href="index.html">Accueil</a> · <a href="assistance.html">Assistance</a> · <a href="confidentialite.html">Confidentialité</a></p>
+</section>
+<section id="de" lang="de">
+<h2>Legal notice and terms of sale</h2>
+<p class="date">Last updated: 12 November 2026. French law applies; this page is also available in French.</p>
+<h3>Publisher and seller</h3>
+<p>Kare is operated by David Mouriau, sole trader, SIRET 825 375 173 00028, address provided to the host and available on request. Contact: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Publication director: David Mouriau.</p>
+<p>Website host: GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+<h3>Product and price</h3>
+<p>The sale is of a lifetime licence to use Kare for Mac (macOS 14 or later, Apple silicon) for <b>1 €</b>. VAT not applicable (art. 293 B of the French Tax Code). A free 14-day trial is offered before any purchase. Updates to version 1 are included.</p>
+<h3>Order and payment</h3>
+<p>Payment is made online by card through Stripe, which processes the payment data; the seller does not keep it. The order is concluded on payment.</p>
+<h3>Delivery</h3>
+<p>The licence key is sent by e-mail to the address given at checkout within 48 hours. Enter it in “Activate Kare…” in the app's menu.</p>
+<h3>Licence</h3>
+<p>The licence is personal: it allows its holder to use Kare on their own Macs. The key must not be shared or resold. Kare sends no data and checks the key without an internet connection.</p>
+<h3>Right of withdrawal and refunds</h3>
+<p>As this is digital content supplied immediately, the statutory 14-day right of withdrawal does not apply once the buyer has agreed to immediate performance. As a goodwill gesture, the seller refunds on simple request by e-mail within 14 days of purchase.</p>
+<h3>Statutory guarantees</h3>
+<p>The seller remains bound by the statutory guarantee of conformity for digital content, regardless of any commercial guarantee.</p>
+<h3>Personal data</h3>
+<p>The buyer's e-mail address is used only to send the key and answer requests; it is kept for accounting for the statutory period. To exercise your rights of access, rectification or erasure: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. See also the app's privacy policy.</p>
+<h3>Mediation and disputes</h3>
+<p>In case of dispute, you may use the free services of the consumer mediator: CM2C – Centre de la Médiation de la Consommation de Conciliateurs de Justice, 14 rue Saint-Jean de Beauregard, 91400 Orsay – cm2c.net. French law applies.</p>
+<p class="date"><a href="index.html">Startseite</a> · <a href="assistance.html">Support</a> · <a href="confidentialite.html">Datenschutz</a></p>
+</section>
+<section id="es" lang="es">
+<h2>Legal notice and terms of sale</h2>
+<p class="date">Last updated: 12 November 2026. French law applies; this page is also available in French.</p>
+<h3>Publisher and seller</h3>
+<p>Kare is operated by David Mouriau, sole trader, SIRET 825 375 173 00028, address provided to the host and available on request. Contact: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Publication director: David Mouriau.</p>
+<p>Website host: GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+<h3>Product and price</h3>
+<p>The sale is of a lifetime licence to use Kare for Mac (macOS 14 or later, Apple silicon) for <b>1 €</b>. VAT not applicable (art. 293 B of the French Tax Code). A free 14-day trial is offered before any purchase. Updates to version 1 are included.</p>
+<h3>Order and payment</h3>
+<p>Payment is made online by card through Stripe, which processes the payment data; the seller does not keep it. The order is concluded on payment.</p>
+<h3>Delivery</h3>
+<p>The licence key is sent by e-mail to the address given at checkout within 48 hours. Enter it in “Activate Kare…” in the app's menu.</p>
+<h3>Licence</h3>
+<p>The licence is personal: it allows its holder to use Kare on their own Macs. The key must not be shared or resold. Kare sends no data and checks the key without an internet connection.</p>
+<h3>Right of withdrawal and refunds</h3>
+<p>As this is digital content supplied immediately, the statutory 14-day right of withdrawal does not apply once the buyer has agreed to immediate performance. As a goodwill gesture, the seller refunds on simple request by e-mail within 14 days of purchase.</p>
+<h3>Statutory guarantees</h3>
+<p>The seller remains bound by the statutory guarantee of conformity for digital content, regardless of any commercial guarantee.</p>
+<h3>Personal data</h3>
+<p>The buyer's e-mail address is used only to send the key and answer requests; it is kept for accounting for the statutory period. To exercise your rights of access, rectification or erasure: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. See also the app's privacy policy.</p>
+<h3>Mediation and disputes</h3>
+<p>In case of dispute, you may use the free services of the consumer mediator: CM2C – Centre de la Médiation de la Consommation de Conciliateurs de Justice, 14 rue Saint-Jean de Beauregard, 91400 Orsay – cm2c.net. French law applies.</p>
+<p class="date"><a href="index.html">Inicio</a> · <a href="assistance.html">Soporte</a> · <a href="confidentialite.html">Privacidad</a></p>
+</section>
+<section id="it" lang="it">
+<h2>Legal notice and terms of sale</h2>
+<p class="date">Last updated: 12 November 2026. French law applies; this page is also available in French.</p>
+<h3>Publisher and seller</h3>
+<p>Kare is operated by David Mouriau, sole trader, SIRET 825 375 173 00028, address provided to the host and available on request. Contact: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Publication director: David Mouriau.</p>
+<p>Website host: GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+<h3>Product and price</h3>
+<p>The sale is of a lifetime licence to use Kare for Mac (macOS 14 or later, Apple silicon) for <b>1 €</b>. VAT not applicable (art. 293 B of the French Tax Code). A free 14-day trial is offered before any purchase. Updates to version 1 are included.</p>
+<h3>Order and payment</h3>
+<p>Payment is made online by card through Stripe, which processes the payment data; the seller does not keep it. The order is concluded on payment.</p>
+<h3>Delivery</h3>
+<p>The licence key is sent by e-mail to the address given at checkout within 48 hours. Enter it in “Activate Kare…” in the app's menu.</p>
+<h3>Licence</h3>
+<p>The licence is personal: it allows its holder to use Kare on their own Macs. The key must not be shared or resold. Kare sends no data and checks the key without an internet connection.</p>
+<h3>Right of withdrawal and refunds</h3>
+<p>As this is digital content supplied immediately, the statutory 14-day right of withdrawal does not apply once the buyer has agreed to immediate performance. As a goodwill gesture, the seller refunds on simple request by e-mail within 14 days of purchase.</p>
+<h3>Statutory guarantees</h3>
+<p>The seller remains bound by the statutory guarantee of conformity for digital content, regardless of any commercial guarantee.</p>
+<h3>Personal data</h3>
+<p>The buyer's e-mail address is used only to send the key and answer requests; it is kept for accounting for the statutory period. To exercise your rights of access, rectification or erasure: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. See also the app's privacy policy.</p>
+<h3>Mediation and disputes</h3>
+<p>In case of dispute, you may use the free services of the consumer mediator: CM2C – Centre de la Médiation de la Consommation de Conciliateurs de Justice, 14 rue Saint-Jean de Beauregard, 91400 Orsay – cm2c.net. French law applies.</p>
+<p class="date"><a href="index.html">Home</a> · <a href="assistance.html">Assistenza</a> · <a href="confidentialite.html">Privacy</a></p>
+</section>
+<section id="pt-BR" lang="pt-BR">
+<h2>Legal notice and terms of sale</h2>
+<p class="date">Last updated: 12 November 2026. French law applies; this page is also available in French.</p>
+<h3>Publisher and seller</h3>
+<p>Kare is operated by David Mouriau, sole trader, SIRET 825 375 173 00028, address provided to the host and available on request. Contact: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Publication director: David Mouriau.</p>
+<p>Website host: GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+<h3>Product and price</h3>
+<p>The sale is of a lifetime licence to use Kare for Mac (macOS 14 or later, Apple silicon) for <b>1 €</b>. VAT not applicable (art. 293 B of the French Tax Code). A free 14-day trial is offered before any purchase. Updates to version 1 are included.</p>
+<h3>Order and payment</h3>
+<p>Payment is made online by card through Stripe, which processes the payment data; the seller does not keep it. The order is concluded on payment.</p>
+<h3>Delivery</h3>
+<p>The licence key is sent by e-mail to the address given at checkout within 48 hours. Enter it in “Activate Kare…” in the app's menu.</p>
+<h3>Licence</h3>
+<p>The licence is personal: it allows its holder to use Kare on their own Macs. The key must not be shared or resold. Kare sends no data and checks the key without an internet connection.</p>
+<h3>Right of withdrawal and refunds</h3>
+<p>As this is digital content supplied immediately, the statutory 14-day right of withdrawal does not apply once the buyer has agreed to immediate performance. As a goodwill gesture, the seller refunds on simple request by e-mail within 14 days of purchase.</p>
+<h3>Statutory guarantees</h3>
+<p>The seller remains bound by the statutory guarantee of conformity for digital content, regardless of any commercial guarantee.</p>
+<h3>Personal data</h3>
+<p>The buyer's e-mail address is used only to send the key and answer requests; it is kept for accounting for the statutory period. To exercise your rights of access, rectification or erasure: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. See also the app's privacy policy.</p>
+<h3>Mediation and disputes</h3>
+<p>In case of dispute, you may use the free services of the consumer mediator: CM2C – Centre de la Médiation de la Consommation de Conciliateurs de Justice, 14 rue Saint-Jean de Beauregard, 91400 Orsay – cm2c.net. French law applies.</p>
+<p class="date"><a href="index.html">Início</a> · <a href="assistance.html">Suporte</a> · <a href="confidentialite.html">Privacidade</a></p>
+</section>
+<section id="nl" lang="nl">
+<h2>Legal notice and terms of sale</h2>
+<p class="date">Last updated: 12 November 2026. French law applies; this page is also available in French.</p>
+<h3>Publisher and seller</h3>
+<p>Kare is operated by David Mouriau, sole trader, SIRET 825 375 173 00028, address provided to the host and available on request. Contact: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Publication director: David Mouriau.</p>
+<p>Website host: GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+<h3>Product and price</h3>
+<p>The sale is of a lifetime licence to use Kare for Mac (macOS 14 or later, Apple silicon) for <b>1 €</b>. VAT not applicable (art. 293 B of the French Tax Code). A free 14-day trial is offered before any purchase. Updates to version 1 are included.</p>
+<h3>Order and payment</h3>
+<p>Payment is made online by card through Stripe, which processes the payment data; the seller does not keep it. The order is concluded on payment.</p>
+<h3>Delivery</h3>
+<p>The licence key is sent by e-mail to the address given at checkout within 48 hours. Enter it in “Activate Kare…” in the app's menu.</p>
+<h3>Licence</h3>
+<p>The licence is personal: it allows its holder to use Kare on their own Macs. The key must not be shared or resold. Kare sends no data and checks the key without an internet connection.</p>
+<h3>Right of withdrawal and refunds</h3>
+<p>As this is digital content supplied immediately, the statutory 14-day right of withdrawal does not apply once the buyer has agreed to immediate performance. As a goodwill gesture, the seller refunds on simple request by e-mail within 14 days of purchase.</p>
+<h3>Statutory guarantees</h3>
+<p>The seller remains bound by the statutory guarantee of conformity for digital content, regardless of any commercial guarantee.</p>
+<h3>Personal data</h3>
+<p>The buyer's e-mail address is used only to send the key and answer requests; it is kept for accounting for the statutory period. To exercise your rights of access, rectification or erasure: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. See also the app's privacy policy.</p>
+<h3>Mediation and disputes</h3>
+<p>In case of dispute, you may use the free services of the consumer mediator: CM2C – Centre de la Médiation de la Consommation de Conciliateurs de Justice, 14 rue Saint-Jean de Beauregard, 91400 Orsay – cm2c.net. French law applies.</p>
+<p class="date"><a href="index.html">Home</a> · <a href="assistance.html">Ondersteuning</a> · <a href="confidentialite.html">Privacy</a></p>
+</section>
+<section id="ja" lang="ja">
+<h2>Legal notice and terms of sale</h2>
+<p class="date">Last updated: 12 November 2026. French law applies; this page is also available in French.</p>
+<h3>Publisher and seller</h3>
+<p>Kare is operated by David Mouriau, sole trader, SIRET 825 375 173 00028, address provided to the host and available on request. Contact: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Publication director: David Mouriau.</p>
+<p>Website host: GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+<h3>Product and price</h3>
+<p>The sale is of a lifetime licence to use Kare for Mac (macOS 14 or later, Apple silicon) for <b>1 €</b>. VAT not applicable (art. 293 B of the French Tax Code). A free 14-day trial is offered before any purchase. Updates to version 1 are included.</p>
+<h3>Order and payment</h3>
+<p>Payment is made online by card through Stripe, which processes the payment data; the seller does not keep it. The order is concluded on payment.</p>
+<h3>Delivery</h3>
+<p>The licence key is sent by e-mail to the address given at checkout within 48 hours. Enter it in “Activate Kare…” in the app's menu.</p>
+<h3>Licence</h3>
+<p>The licence is personal: it allows its holder to use Kare on their own Macs. The key must not be shared or resold. Kare sends no data and checks the key without an internet connection.</p>
+<h3>Right of withdrawal and refunds</h3>
+<p>As this is digital content supplied immediately, the statutory 14-day right of withdrawal does not apply once the buyer has agreed to immediate performance. As a goodwill gesture, the seller refunds on simple request by e-mail within 14 days of purchase.</p>
+<h3>Statutory guarantees</h3>
+<p>The seller remains bound by the statutory guarantee of conformity for digital content, regardless of any commercial guarantee.</p>
+<h3>Personal data</h3>
+<p>The buyer's e-mail address is used only to send the key and answer requests; it is kept for accounting for the statutory period. To exercise your rights of access, rectification or erasure: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. See also the app's privacy policy.</p>
+<h3>Mediation and disputes</h3>
+<p>In case of dispute, you may use the free services of the consumer mediator: CM2C – Centre de la Médiation de la Consommation de Conciliateurs de Justice, 14 rue Saint-Jean de Beauregard, 91400 Orsay – cm2c.net. French law applies.</p>
+<p class="date"><a href="index.html">ホーム</a> · <a href="assistance.html">サポート</a> · <a href="confidentialite.html">プライバシー</a></p>
+</section>
+<section id="zh-Hans" lang="zh-Hans">
+<h2>Legal notice and terms of sale</h2>
+<p class="date">Last updated: 12 November 2026. French law applies; this page is also available in French.</p>
+<h3>Publisher and seller</h3>
+<p>Kare is operated by David Mouriau, sole trader, SIRET 825 375 173 00028, address provided to the host and available on request. Contact: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Publication director: David Mouriau.</p>
+<p>Website host: GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+<h3>Product and price</h3>
+<p>The sale is of a lifetime licence to use Kare for Mac (macOS 14 or later, Apple silicon) for <b>1 €</b>. VAT not applicable (art. 293 B of the French Tax Code). A free 14-day trial is offered before any purchase. Updates to version 1 are included.</p>
+<h3>Order and payment</h3>
+<p>Payment is made online by card through Stripe, which processes the payment data; the seller does not keep it. The order is concluded on payment.</p>
+<h3>Delivery</h3>
+<p>The licence key is sent by e-mail to the address given at checkout within 48 hours. Enter it in “Activate Kare…” in the app's menu.</p>
+<h3>Licence</h3>
+<p>The licence is personal: it allows its holder to use Kare on their own Macs. The key must not be shared or resold. Kare sends no data and checks the key without an internet connection.</p>
+<h3>Right of withdrawal and refunds</h3>
+<p>As this is digital content supplied immediately, the statutory 14-day right of withdrawal does not apply once the buyer has agreed to immediate performance. As a goodwill gesture, the seller refunds on simple request by e-mail within 14 days of purchase.</p>
+<h3>Statutory guarantees</h3>
+<p>The seller remains bound by the statutory guarantee of conformity for digital content, regardless of any commercial guarantee.</p>
+<h3>Personal data</h3>
+<p>The buyer's e-mail address is used only to send the key and answer requests; it is kept for accounting for the statutory period. To exercise your rights of access, rectification or erasure: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. See also the app's privacy policy.</p>
+<h3>Mediation and disputes</h3>
+<p>In case of dispute, you may use the free services of the consumer mediator: CM2C – Centre de la Médiation de la Consommation de Conciliateurs de Justice, 14 rue Saint-Jean de Beauregard, 91400 Orsay – cm2c.net. French law applies.</p>
+<p class="date"><a href="index.html">首页</a> · <a href="assistance.html">支持</a> · <a href="confidentialite.html">隐私</a></p>
+</section>
+<section id="ko" lang="ko">
+<h2>Legal notice and terms of sale</h2>
+<p class="date">Last updated: 12 November 2026. French law applies; this page is also available in French.</p>
+<h3>Publisher and seller</h3>
+<p>Kare is operated by David Mouriau, sole trader, SIRET 825 375 173 00028, address provided to the host and available on request. Contact: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Publication director: David Mouriau.</p>
+<p>Website host: GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+<h3>Product and price</h3>
+<p>The sale is of a lifetime licence to use Kare for Mac (macOS 14 or later, Apple silicon) for <b>1 €</b>. VAT not applicable (art. 293 B of the French Tax Code). A free 14-day trial is offered before any purchase. Updates to version 1 are included.</p>
+<h3>Order and payment</h3>
+<p>Payment is made online by card through Stripe, which processes the payment data; the seller does not keep it. The order is concluded on payment.</p>
+<h3>Delivery</h3>
+<p>The licence key is sent by e-mail to the address given at checkout within 48 hours. Enter it in “Activate Kare…” in the app's menu.</p>
+<h3>Licence</h3>
+<p>The licence is personal: it allows its holder to use Kare on their own Macs. The key must not be shared or resold. Kare sends no data and checks the key without an internet connection.</p>
+<h3>Right of withdrawal and refunds</h3>
+<p>As this is digital content supplied immediately, the statutory 14-day right of withdrawal does not apply once the buyer has agreed to immediate performance. As a goodwill gesture, the seller refunds on simple request by e-mail within 14 days of purchase.</p>
+<h3>Statutory guarantees</h3>
+<p>The seller remains bound by the statutory guarantee of conformity for digital content, regardless of any commercial guarantee.</p>
+<h3>Personal data</h3>
+<p>The buyer's e-mail address is used only to send the key and answer requests; it is kept for accounting for the statutory period. To exercise your rights of access, rectification or erasure: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. See also the app's privacy policy.</p>
+<h3>Mediation and disputes</h3>
+<p>In case of dispute, you may use the free services of the consumer mediator: CM2C – Centre de la Médiation de la Consommation de Conciliateurs de Justice, 14 rue Saint-Jean de Beauregard, 91400 Orsay – cm2c.net. French law applies.</p>
+<p class="date"><a href="index.html">홈</a> · <a href="assistance.html">지원</a> · <a href="confidentialite.html">개인정보</a></p>
+</section>
+
+</main></body></html>
