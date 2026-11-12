@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kare — Confidentialité · Privacy</title><style>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kare — Privacy</title><style>
 :root { --fond: #f4f4f6; --carte: #fff; --texte: #111; --doux: #555; --trait: #111; }
 @media (prefers-color-scheme: dark) { :root { --fond: #0d0d10; --carte: #18181c; --texte: #f2f2f2; --doux: #b0b0b8; --trait: #f2f2f2; } }
 * { box-sizing: border-box; }
@@ -19,54 +19,144 @@ p, li { margin: 6px 0; }
 kbd { font: 600 15px -apple-system, sans-serif; border: 1.5px solid var(--trait); border-radius: 5px; padding: 0 5px; }
 .date { color: var(--doux); font-size: 14px; }
 a { color: inherit; }
-
 .js section[lang] { display: none; }
-.js[data-l="fr"] section[lang="fr"], .js[data-l="en"] section[lang="en"], .js[data-l="uk"] section[lang="en-GB"] { display: block; }
+.js[data-l="en"] section[lang="en"] { display: block; }
+.js[data-l="en"] nav a[data-l="en"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="fr"] section[lang="fr"] { display: block; }
+.js[data-l="fr"] nav a[data-l="fr"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="de"] section[lang="de"] { display: block; }
+.js[data-l="de"] nav a[data-l="de"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="es"] section[lang="es"] { display: block; }
+.js[data-l="es"] nav a[data-l="es"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="it"] section[lang="it"] { display: block; }
+.js[data-l="it"] nav a[data-l="it"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="pt-BR"] section[lang="pt-BR"] { display: block; }
+.js[data-l="pt-BR"] nav a[data-l="pt-BR"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="nl"] section[lang="nl"] { display: block; }
+.js[data-l="nl"] nav a[data-l="nl"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="ja"] section[lang="ja"] { display: block; }
+.js[data-l="ja"] nav a[data-l="ja"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="zh-Hans"] section[lang="zh-Hans"] { display: block; }
+.js[data-l="zh-Hans"] nav a[data-l="zh-Hans"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="ko"] section[lang="ko"] { display: block; }
+.js[data-l="ko"] nav a[data-l="ko"] { font-weight: 700; text-decoration: underline; }
+
 nav a[data-l] { cursor: pointer; }
-.js[data-l="fr"] nav a[data-l="fr"], .js[data-l="en"] nav a[data-l="en"], .js[data-l="uk"] nav a[data-l="uk"] { font-weight: 700; text-decoration: underline; }
+.langues { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.accroche { font-size: 22px; line-height: 1.4; margin: 0 0 18px; }
+.bouton { display: inline-block; padding: 10px 22px; border: 2px solid var(--trait); border-radius: 8px; background: var(--texte); color: var(--fond); text-decoration: none; font-weight: 600; box-shadow: 4px 4px 0 var(--trait); }
+.bouton.off { background: var(--carte); color: var(--doux); }
+.fonctions { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-top: 10px; }
+.fonctions div { border: 1.5px solid var(--trait); padding: 12px 14px; }
+.fonctions b { display: block; margin-bottom: 2px; }
+img.vue { width: 100%; height: auto; border: 2px solid var(--trait); box-shadow: 5px 5px 0 var(--trait); margin: 14px 0 6px; }
+footer { color: var(--doux); font-size: 14px; }
 </style><script>
 (function () {
-  var d = document.documentElement, l = null;
+  var codes = ["en", "fr", "de", "es", "it", "pt-BR", "nl", "ja", "zh-Hans", "ko"], d = document.documentElement, l = null;
   try { l = localStorage.getItem('kare-langue'); } catch (e) {}
-  if (!l) {
+  if (codes.indexOf(l) < 0) {
     var n = ((navigator.languages && navigator.languages[0]) || navigator.language || 'en').toLowerCase();
-    l = n.slice(0, 2) === 'fr' ? 'fr' : (/^en-(gb|ie|au|nz|za|in)/.test(n) ? 'uk' : 'en');
+    l = 'en';
+    if (n.slice(0, 2) === 'zh') { if (!/hant|-tw|-hk|-mo/.test(n)) l = 'zh-Hans'; }
+    else if (n.slice(0, 2) === 'pt') l = 'pt-BR';
+    else if (codes.indexOf(n.slice(0, 2)) >= 0) l = n.slice(0, 2);
   }
   var h = (location.hash || '').replace('#', '');
-  if (h === 'fr' || h === 'en' || h === 'uk') l = h;
-  d.classList.add('js'); d.setAttribute('data-l', l); d.lang = l === 'uk' ? 'en-GB' : l;
+  if (codes.indexOf(h) >= 0) l = h;
+  d.classList.add('js'); d.setAttribute('data-l', l); d.lang = l;
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[data-l]');
     if (!a) return;
     e.preventDefault();
-    var x = a.getAttribute('data-l'); d.setAttribute('data-l', x); d.lang = x === 'uk' ? 'en-GB' : x;
-    try { localStorage.setItem('kare-langue', a.getAttribute('data-l')); } catch (e2) {}
+    var x = a.getAttribute('data-l'); d.setAttribute('data-l', x); d.lang = x;
+    try { localStorage.setItem('kare-langue', x); } catch (e2) {}
   });
 })();
 </script></head>
 <body><main>
 <header><svg class="icone" viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges"><g fill="currentColor"><rect x="10" y="6" width="1" height="1"/><rect x="11" y="6" width="1" height="1"/><rect x="12" y="6" width="1" height="1"/><rect x="13" y="6" width="1" height="1"/><rect x="14" y="6" width="1" height="1"/><rect x="15" y="6" width="1" height="1"/><rect x="16" y="6" width="1" height="1"/><rect x="17" y="6" width="1" height="1"/><rect x="18" y="6" width="1" height="1"/><rect x="19" y="6" width="1" height="1"/><rect x="9" y="7" width="1" height="1"/><rect x="20" y="7" width="1" height="1"/><rect x="4" y="8" width="1" height="1"/><rect x="5" y="8" width="1" height="1"/><rect x="6" y="8" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/><rect x="9" y="8" width="1" height="1"/><rect x="20" y="8" width="1" height="1"/><rect x="4" y="9" width="1" height="1"/><rect x="5" y="9" width="1" height="1"/><rect x="6" y="9" width="1" height="1"/><rect x="7" y="9" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/><rect x="20" y="9" width="1" height="1"/><rect x="3" y="10" width="1" height="1"/><rect x="4" y="10" width="1" height="1"/><rect x="5" y="10" width="1" height="1"/><rect x="6" y="10" width="1" height="1"/><rect x="7" y="10" width="1" height="1"/><rect x="8" y="10" width="1" height="1"/><rect x="9" y="10" width="1" height="1"/><rect x="10" y="10" width="1" height="1"/><rect x="11" y="10" width="1" height="1"/><rect x="12" y="10" width="1" height="1"/><rect x="13" y="10" width="1" height="1"/><rect x="14" y="10" width="1" height="1"/><rect x="15" y="10" width="1" height="1"/><rect x="16" y="10" width="1" height="1"/><rect x="17" y="10" width="1" height="1"/><rect x="18" y="10" width="1" height="1"/><rect x="19" y="10" width="1" height="1"/><rect x="20" y="10" width="1" height="1"/><rect x="21" y="10" width="1" height="1"/><rect x="22" y="10" width="1" height="1"/><rect x="23" y="10" width="1" height="1"/><rect x="24" y="10" width="1" height="1"/><rect x="25" y="10" width="1" height="1"/><rect x="26" y="10" width="1" height="1"/><rect x="27" y="10" width="1" height="1"/><rect x="28" y="10" width="1" height="1"/><rect x="2" y="11" width="1" height="1"/><rect x="29" y="11" width="1" height="1"/><rect x="2" y="12" width="1" height="1"/><rect x="12" y="12" width="1" height="1"/><rect x="13" y="12" width="1" height="1"/><rect x="14" y="12" width="1" height="1"/><rect x="15" y="12" width="1" height="1"/><rect x="16" y="12" width="1" height="1"/><rect x="17" y="12" width="1" height="1"/><rect x="18" y="12" width="1" height="1"/><rect x="19" y="12" width="1" height="1"/><rect x="24" y="12" width="1" height="1"/><rect x="25" y="12" width="1" height="1"/><rect x="26" y="12" width="1" height="1"/><rect x="27" y="12" width="1" height="1"/><rect x="29" y="12" width="1" height="1"/><rect x="2" y="13" width="1" height="1"/><rect x="4" y="13" width="1" height="1"/><rect x="5" y="13" width="1" height="1"/><rect x="11" y="13" width="1" height="1"/><rect x="12" y="13" width="1" height="1"/><rect x="13" y="13" width="1" height="1"/><rect x="14" y="13" width="1" height="1"/><rect x="17" y="13" width="1" height="1"/><rect x="18" y="13" width="1" height="1"/><rect x="19" y="13" width="1" height="1"/><rect x="20" y="13" width="1" height="1"/><rect x="24" y="13" width="1" height="1"/><rect x="27" y="13" width="1" height="1"/><rect x="29" y="13" width="1" height="1"/><rect x="2" y="14" width="1" height="1"/><rect x="4" y="14" width="1" height="1"/><rect x="10" y="14" width="1" height="1"/><rect x="11" y="14" width="1" height="1"/><rect x="12" y="14" width="1" height="1"/><rect x="19" y="14" width="1" height="1"/><rect x="20" y="14" width="1" height="1"/><rect x="21" y="14" width="1" height="1"/><rect x="24" y="14" width="1" height="1"/><rect x="25" y="14" width="1" height="1"/><rect x="26" y="14" width="1" height="1"/><rect x="27" y="14" width="1" height="1"/><rect x="29" y="14" width="1" height="1"/><rect x="2" y="15" width="1" height="1"/><rect x="4" y="15" width="1" height="1"/><rect x="5" y="15" width="1" height="1"/><rect x="9" y="15" width="1" height="1"/><rect x="10" y="15" width="1" height="1"/><rect x="11" y="15" width="1" height="1"/><rect x="20" y="15" width="1" height="1"/><rect x="21" y="15" width="1" height="1"/><rect x="22" y="15" width="1" height="1"/><rect x="29" y="15" width="1" height="1"/><rect x="2" y="16" width="1" height="1"/><rect x="4" y="16" width="1" height="1"/><rect x="9" y="16" width="1" height="1"/><rect x="10" y="16" width="1" height="1"/><rect x="13" y="16" width="1" height="1"/><rect x="14" y="16" width="1" height="1"/><rect x="15" y="16" width="1" height="1"/><rect x="16" y="16" width="1" height="1"/><rect x="17" y="16" width="1" height="1"/><rect x="21" y="16" width="1" height="1"/><rect x="22" y="16" width="1" height="1"/><rect x="29" y="16" width="1" height="1"/><rect x="2" y="17" width="1" height="1"/><rect x="4" y="17" width="1" height="1"/><rect x="5" y="17" width="1" height="1"/><rect x="9" y="17" width="1" height="1"/><rect x="10" y="17" width="1" height="1"/><rect x="13" y="17" width="1" height="1"/><rect x="18" y="17" width="1" height="1"/><rect x="21" y="17" width="1" height="1"/><rect x="22" y="17" width="1" height="1"/><rect x="29" y="17" width="1" height="1"/><rect x="2" y="18" width="1" height="1"/><rect x="4" y="18" width="1" height="1"/><rect x="9" y="18" width="1" height="1"/><rect x="13" y="18" width="1" height="1"/><rect x="18" y="18" width="1" height="1"/><rect x="22" y="18" width="1" height="1"/><rect x="29" y="18" width="1" height="1"/><rect x="2" y="19" width="1" height="1"/><rect x="4" y="19" width="1" height="1"/><rect x="5" y="19" width="1" height="1"/><rect x="9" y="19" width="1" height="1"/><rect x="13" y="19" width="1" height="1"/><rect x="18" y="19" width="1" height="1"/><rect x="22" y="19" width="1" height="1"/><rect x="29" y="19" width="1" height="1"/><rect x="2" y="20" width="1" height="1"/><rect x="4" y="20" width="1" height="1"/><rect x="9" y="20" width="1" height="1"/><rect x="10" y="20" width="1" height="1"/><rect x="13" y="20" width="1" height="1"/><rect x="18" y="20" width="1" height="1"/><rect x="21" y="20" width="1" height="1"/><rect x="22" y="20" width="1" height="1"/><rect x="29" y="20" width="1" height="1"/><rect x="2" y="21" width="1" height="1"/><rect x="4" y="21" width="1" height="1"/><rect x="5" y="21" width="1" height="1"/><rect x="9" y="21" width="1" height="1"/><rect x="10" y="21" width="1" height="1"/><rect x="14" y="21" width="1" height="1"/><rect x="15" y="21" width="1" height="1"/><rect x="16" y="21" width="1" height="1"/><rect x="17" y="21" width="1" height="1"/><rect x="21" y="21" width="1" height="1"/><rect x="22" y="21" width="1" height="1"/><rect x="29" y="21" width="1" height="1"/><rect x="2" y="22" width="1" height="1"/><rect x="4" y="22" width="1" height="1"/><rect x="9" y="22" width="1" height="1"/><rect x="10" y="22" width="1" height="1"/><rect x="11" y="22" width="1" height="1"/><rect x="20" y="22" width="1" height="1"/><rect x="21" y="22" width="1" height="1"/><rect x="22" y="22" width="1" height="1"/><rect x="29" y="22" width="1" height="1"/><rect x="2" y="23" width="1" height="1"/><rect x="4" y="23" width="1" height="1"/><rect x="5" y="23" width="1" height="1"/><rect x="10" y="23" width="1" height="1"/><rect x="11" y="23" width="1" height="1"/><rect x="12" y="23" width="1" height="1"/><rect x="19" y="23" width="1" height="1"/><rect x="20" y="23" width="1" height="1"/><rect x="21" y="23" width="1" height="1"/><rect x="29" y="23" width="1" height="1"/><rect x="2" y="24" width="1" height="1"/><rect x="4" y="24" width="1" height="1"/><rect x="11" y="24" width="1" height="1"/><rect x="12" y="24" width="1" height="1"/><rect x="13" y="24" width="1" height="1"/><rect x="14" y="24" width="1" height="1"/><rect x="17" y="24" width="1" height="1"/><rect x="18" y="24" width="1" height="1"/><rect x="19" y="24" width="1" height="1"/><rect x="20" y="24" width="1" height="1"/><rect x="29" y="24" width="1" height="1"/><rect x="2" y="25" width="1" height="1"/><rect x="12" y="25" width="1" height="1"/><rect x="13" y="25" width="1" height="1"/><rect x="14" y="25" width="1" height="1"/><rect x="15" y="25" width="1" height="1"/><rect x="16" y="25" width="1" height="1"/><rect x="17" y="25" width="1" height="1"/><rect x="18" y="25" width="1" height="1"/><rect x="19" y="25" width="1" height="1"/><rect x="29" y="25" width="1" height="1"/><rect x="2" y="26" width="1" height="1"/><rect x="29" y="26" width="1" height="1"/><rect x="3" y="27" width="1" height="1"/><rect x="4" y="27" width="1" height="1"/><rect x="5" y="27" width="1" height="1"/><rect x="6" y="27" width="1" height="1"/><rect x="7" y="27" width="1" height="1"/><rect x="8" y="27" width="1" height="1"/><rect x="9" y="27" width="1" height="1"/><rect x="10" y="27" width="1" height="1"/><rect x="11" y="27" width="1" height="1"/><rect x="12" y="27" width="1" height="1"/><rect x="13" y="27" width="1" height="1"/><rect x="14" y="27" width="1" height="1"/><rect x="15" y="27" width="1" height="1"/><rect x="16" y="27" width="1" height="1"/><rect x="17" y="27" width="1" height="1"/><rect x="18" y="27" width="1" height="1"/><rect x="19" y="27" width="1" height="1"/><rect x="20" y="27" width="1" height="1"/><rect x="21" y="27" width="1" height="1"/><rect x="22" y="27" width="1" height="1"/><rect x="23" y="27" width="1" height="1"/><rect x="24" y="27" width="1" height="1"/><rect x="25" y="27" width="1" height="1"/><rect x="26" y="27" width="1" height="1"/><rect x="27" y="27" width="1" height="1"/><rect x="28" y="27" width="1" height="1"/></g></svg><div><h1>Kare</h1><p class="slogan">Capture, with care.</p></div></header>
-<nav><a href="#en" data-l="en">English</a><a href="#uk" data-l="uk">English (UK)</a><a href="#fr" data-l="fr">Français</a><a href="index.html">Accueil · Home</a><a href="assistance.html">Assistance · Support</a></nav>
-
-
+<nav class="langues"><a href="#en" data-l="en">English</a><a href="#fr" data-l="fr">Français</a><a href="#de" data-l="de">Deutsch</a><a href="#es" data-l="es">Español</a><a href="#it" data-l="it">Italiano</a><a href="#pt-BR" data-l="pt-BR">Português</a><a href="#nl" data-l="nl">Nederlands</a><a href="#ja" data-l="ja">日本語</a><a href="#zh-Hans" data-l="zh-Hans">简体中文</a><a href="#ko" data-l="ko">한국어</a></nav>
+<nav></nav>
 <section id="en" lang="en">
 <h2>Privacy policy</h2>
 <p>Kare collects no data.</p>
 <p>The app has no internet access: captures and recognized text stay on your Mac, on your clipboard and, when you save a capture, in your Downloads folder. Text recognition is done by macOS, on your Mac. Kare uses no account, no ads, no analytics and no online artificial intelligence. Nothing is sent to the developer or to third parties.</p>
 <p>Contact: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>.</p>
 <p class="date">Last updated: October 13, 2026.</p>
-</section><section id="uk" lang="en-GB">
-<h2>Privacy policy</h2>
-<p>Kare collects no data.</p>
-<p>The app has no internet access: captures and recognised text stay on your Mac, on your clipboard and, when you save a capture, in your Downloads folder. Text recognition is done by macOS, on your Mac. Kare uses no account, no ads, no analytics and no online artificial intelligence. Nothing is sent to the developer or to third parties.</p>
-<p>Contact: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>.</p>
-<p class="date">Last updated: October 13, 2026.</p>
-</section><section id="fr" lang="fr">
+<p class="date"><a href="index.html">Home</a> · <a href="assistance.html">Support</a></p>
+</section>
+<section id="fr" lang="fr">
 <h2>Politique de confidentialité</h2>
 <p>Kare ne collecte aucune donnée.</p>
 <p>L'app n'a pas accès à internet : les captures et le texte reconnu restent sur votre Mac, dans le presse-papiers et, quand vous enregistrez une capture, dans votre dossier Téléchargements. La reconnaissance du texte est faite par macOS, sur votre Mac. Kare n'utilise ni compte, ni publicité, ni mesure d'audience, ni intelligence artificielle en ligne. Rien n'est transmis au développeur ni à des tiers.</p>
 <p>Contact : <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>.</p>
 <p class="date">Mise à jour : 13 octobre 2026.</p>
+<p class="date"><a href="index.html">Accueil</a> · <a href="assistance.html">Assistance</a></p>
+</section>
+<section id="de" lang="de">
+<h2>Datenschutzerklärung</h2>
+<p>Kare sammelt keine Daten.</p>
+<p>Die App hat keinen Internetzugang: Aufnahmen und erkannter Text bleiben auf Ihrem Mac, in der Zwischenablage und, wenn Sie eine Aufnahme sichern, im Ordner „Downloads“. Die Texterkennung erfolgt durch macOS auf Ihrem Mac. Kare nutzt kein Konto, keine Werbung, keine Statistik und keine Online-KI. Nichts wird an den Entwickler oder Dritte gesendet.</p>
+<p>Kontakt: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>.</p>
+<p class="date">Stand: 13. Oktober 2026.</p>
+<p class="date"><a href="index.html">Startseite</a> · <a href="assistance.html">Support</a></p>
+</section>
+<section id="es" lang="es">
+<h2>Política de privacidad</h2>
+<p>Kare no recopila ningún dato.</p>
+<p>La app no tiene acceso a internet: las capturas y el texto reconocido se quedan en tu Mac, en el portapapeles y, al guardar una captura, en tu carpeta Descargas. El reconocimiento de texto lo hace macOS, en tu Mac. Kare no usa cuenta, publicidad, estadísticas ni inteligencia artificial en línea. No se envía nada al desarrollador ni a terceros.</p>
+<p>Contacto: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>.</p>
+<p class="date">Última actualización: 13 de octubre de 2026.</p>
+<p class="date"><a href="index.html">Inicio</a> · <a href="assistance.html">Soporte</a></p>
+</section>
+<section id="it" lang="it">
+<h2>Informativa sulla privacy</h2>
+<p>Kare non raccoglie alcun dato.</p>
+<p>L'app non ha accesso a internet: le catture e il testo riconosciuto restano sul tuo Mac, negli appunti e, quando salvi una cattura, nella cartella Download. Il riconoscimento del testo è fatto da macOS, sul tuo Mac. Kare non usa account, pubblicità, statistiche né intelligenza artificiale online. Nulla viene inviato allo sviluppatore o a terzi.</p>
+<p>Contatto: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>.</p>
+<p class="date">Ultimo aggiornamento: 13 ottobre 2026.</p>
+<p class="date"><a href="index.html">Home</a> · <a href="assistance.html">Assistenza</a></p>
+</section>
+<section id="pt-BR" lang="pt-BR">
+<h2>Política de privacidade</h2>
+<p>O Kare não coleta nenhum dado.</p>
+<p>O app não tem acesso à internet: as capturas e o texto reconhecido ficam no seu Mac, na área de transferência e, ao salvar uma captura, na pasta Downloads. O reconhecimento de texto é feito pelo macOS, no seu Mac. O Kare não usa conta, publicidade, estatísticas nem inteligência artificial online. Nada é enviado ao desenvolvedor nem a terceiros.</p>
+<p>Contato: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>.</p>
+<p class="date">Última atualização: 13 de outubro de 2026.</p>
+<p class="date"><a href="index.html">Início</a> · <a href="assistance.html">Suporte</a></p>
+</section>
+<section id="nl" lang="nl">
+<h2>Privacybeleid</h2>
+<p>Kare verzamelt geen gegevens.</p>
+<p>De app heeft geen internettoegang: opnamen en herkende tekst blijven op je Mac, op het klembord en, als je een opname bewaart, in je map Downloads. De tekstherkenning gebeurt door macOS, op je Mac. Kare gebruikt geen account, reclame, statistieken of online kunstmatige intelligentie. Er wordt niets naar de ontwikkelaar of derden gestuurd.</p>
+<p>Contact: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>.</p>
+<p class="date">Laatst bijgewerkt: 13 oktober 2026.</p>
+<p class="date"><a href="index.html">Home</a> · <a href="assistance.html">Ondersteuning</a></p>
+</section>
+<section id="ja" lang="ja">
+<h2>プライバシーポリシー</h2>
+<p>Kareはデータを一切収集しません。</p>
+<p>アプリはインターネットに接続しません。キャプチャと認識した文字は、Mac上、クリップボード、そして保存した場合は「ダウンロード」フォルダにとどまります。文字認識はMac上のmacOSが行います。Kareはアカウント、広告、アクセス解析、オンラインのAIを使いません。開発者や第三者には何も送信されません。</p>
+<p>お問い合わせ：<a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>。</p>
+<p class="date">最終更新：2026年10月13日。</p>
+<p class="date"><a href="index.html">ホーム</a> · <a href="assistance.html">サポート</a></p>
+</section>
+<section id="zh-Hans" lang="zh-Hans">
+<h2>隐私政策</h2>
+<p>Kare 不收集任何数据。</p>
+<p>App 无法访问互联网：截图和识别出的文字留在你的 Mac 上，在剪贴板中；当你保存截图时，则在“下载”文件夹中。文字识别由 macOS 在你的 Mac 上完成。Kare 不使用账户、广告、统计或在线人工智能。不会向开发者或第三方发送任何内容。</p>
+<p>联系：<a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>。</p>
+<p class="date">最后更新：2026 年 10 月 13 日。</p>
+<p class="date"><a href="index.html">首页</a> · <a href="assistance.html">支持</a></p>
+</section>
+<section id="ko" lang="ko">
+<h2>개인정보 처리방침</h2>
+<p>Kare는 어떤 데이터도 수집하지 않습니다.</p>
+<p>앱은 인터넷에 접근하지 않습니다. 캡처와 인식된 텍스트는 Mac, 클립보드, 그리고 캡처를 저장할 때는 다운로드 폴더에만 남습니다. 텍스트 인식은 Mac에서 macOS가 수행합니다. Kare는 계정, 광고, 분석, 온라인 인공지능을 사용하지 않습니다. 개발자나 제3자에게는 아무것도 전송되지 않습니다.</p>
+<p>문의: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>.</p>
+<p class="date">최종 업데이트: 2026년 10월 13일.</p>
+<p class="date"><a href="index.html">홈</a> · <a href="assistance.html">지원</a></p>
 </section>
 
 </main></body></html>

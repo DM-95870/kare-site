@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kare — Assistance · Support</title><style>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kare — Support</title><style>
 :root { --fond: #f4f4f6; --carte: #fff; --texte: #111; --doux: #555; --trait: #111; }
 @media (prefers-color-scheme: dark) { :root { --fond: #0d0d10; --carte: #18181c; --texte: #f2f2f2; --doux: #b0b0b8; --trait: #f2f2f2; } }
 * { box-sizing: border-box; }
@@ -19,36 +19,65 @@ p, li { margin: 6px 0; }
 kbd { font: 600 15px -apple-system, sans-serif; border: 1.5px solid var(--trait); border-radius: 5px; padding: 0 5px; }
 .date { color: var(--doux); font-size: 14px; }
 a { color: inherit; }
-
 .js section[lang] { display: none; }
-.js[data-l="fr"] section[lang="fr"], .js[data-l="en"] section[lang="en"], .js[data-l="uk"] section[lang="en-GB"] { display: block; }
+.js[data-l="en"] section[lang="en"] { display: block; }
+.js[data-l="en"] nav a[data-l="en"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="fr"] section[lang="fr"] { display: block; }
+.js[data-l="fr"] nav a[data-l="fr"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="de"] section[lang="de"] { display: block; }
+.js[data-l="de"] nav a[data-l="de"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="es"] section[lang="es"] { display: block; }
+.js[data-l="es"] nav a[data-l="es"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="it"] section[lang="it"] { display: block; }
+.js[data-l="it"] nav a[data-l="it"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="pt-BR"] section[lang="pt-BR"] { display: block; }
+.js[data-l="pt-BR"] nav a[data-l="pt-BR"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="nl"] section[lang="nl"] { display: block; }
+.js[data-l="nl"] nav a[data-l="nl"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="ja"] section[lang="ja"] { display: block; }
+.js[data-l="ja"] nav a[data-l="ja"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="zh-Hans"] section[lang="zh-Hans"] { display: block; }
+.js[data-l="zh-Hans"] nav a[data-l="zh-Hans"] { font-weight: 700; text-decoration: underline; }
+.js[data-l="ko"] section[lang="ko"] { display: block; }
+.js[data-l="ko"] nav a[data-l="ko"] { font-weight: 700; text-decoration: underline; }
+
 nav a[data-l] { cursor: pointer; }
-.js[data-l="fr"] nav a[data-l="fr"], .js[data-l="en"] nav a[data-l="en"], .js[data-l="uk"] nav a[data-l="uk"] { font-weight: 700; text-decoration: underline; }
+.langues { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.accroche { font-size: 22px; line-height: 1.4; margin: 0 0 18px; }
+.bouton { display: inline-block; padding: 10px 22px; border: 2px solid var(--trait); border-radius: 8px; background: var(--texte); color: var(--fond); text-decoration: none; font-weight: 600; box-shadow: 4px 4px 0 var(--trait); }
+.bouton.off { background: var(--carte); color: var(--doux); }
+.fonctions { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-top: 10px; }
+.fonctions div { border: 1.5px solid var(--trait); padding: 12px 14px; }
+.fonctions b { display: block; margin-bottom: 2px; }
+img.vue { width: 100%; height: auto; border: 2px solid var(--trait); box-shadow: 5px 5px 0 var(--trait); margin: 14px 0 6px; }
+footer { color: var(--doux); font-size: 14px; }
 </style><script>
 (function () {
-  var d = document.documentElement, l = null;
+  var codes = ["en", "fr", "de", "es", "it", "pt-BR", "nl", "ja", "zh-Hans", "ko"], d = document.documentElement, l = null;
   try { l = localStorage.getItem('kare-langue'); } catch (e) {}
-  if (!l) {
+  if (codes.indexOf(l) < 0) {
     var n = ((navigator.languages && navigator.languages[0]) || navigator.language || 'en').toLowerCase();
-    l = n.slice(0, 2) === 'fr' ? 'fr' : (/^en-(gb|ie|au|nz|za|in)/.test(n) ? 'uk' : 'en');
+    l = 'en';
+    if (n.slice(0, 2) === 'zh') { if (!/hant|-tw|-hk|-mo/.test(n)) l = 'zh-Hans'; }
+    else if (n.slice(0, 2) === 'pt') l = 'pt-BR';
+    else if (codes.indexOf(n.slice(0, 2)) >= 0) l = n.slice(0, 2);
   }
   var h = (location.hash || '').replace('#', '');
-  if (h === 'fr' || h === 'en' || h === 'uk') l = h;
-  d.classList.add('js'); d.setAttribute('data-l', l); d.lang = l === 'uk' ? 'en-GB' : l;
+  if (codes.indexOf(h) >= 0) l = h;
+  d.classList.add('js'); d.setAttribute('data-l', l); d.lang = l;
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[data-l]');
     if (!a) return;
     e.preventDefault();
-    var x = a.getAttribute('data-l'); d.setAttribute('data-l', x); d.lang = x === 'uk' ? 'en-GB' : x;
-    try { localStorage.setItem('kare-langue', a.getAttribute('data-l')); } catch (e2) {}
+    var x = a.getAttribute('data-l'); d.setAttribute('data-l', x); d.lang = x;
+    try { localStorage.setItem('kare-langue', x); } catch (e2) {}
   });
 })();
 </script></head>
 <body><main>
 <header><svg class="icone" viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges"><g fill="currentColor"><rect x="10" y="6" width="1" height="1"/><rect x="11" y="6" width="1" height="1"/><rect x="12" y="6" width="1" height="1"/><rect x="13" y="6" width="1" height="1"/><rect x="14" y="6" width="1" height="1"/><rect x="15" y="6" width="1" height="1"/><rect x="16" y="6" width="1" height="1"/><rect x="17" y="6" width="1" height="1"/><rect x="18" y="6" width="1" height="1"/><rect x="19" y="6" width="1" height="1"/><rect x="9" y="7" width="1" height="1"/><rect x="20" y="7" width="1" height="1"/><rect x="4" y="8" width="1" height="1"/><rect x="5" y="8" width="1" height="1"/><rect x="6" y="8" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/><rect x="9" y="8" width="1" height="1"/><rect x="20" y="8" width="1" height="1"/><rect x="4" y="9" width="1" height="1"/><rect x="5" y="9" width="1" height="1"/><rect x="6" y="9" width="1" height="1"/><rect x="7" y="9" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/><rect x="20" y="9" width="1" height="1"/><rect x="3" y="10" width="1" height="1"/><rect x="4" y="10" width="1" height="1"/><rect x="5" y="10" width="1" height="1"/><rect x="6" y="10" width="1" height="1"/><rect x="7" y="10" width="1" height="1"/><rect x="8" y="10" width="1" height="1"/><rect x="9" y="10" width="1" height="1"/><rect x="10" y="10" width="1" height="1"/><rect x="11" y="10" width="1" height="1"/><rect x="12" y="10" width="1" height="1"/><rect x="13" y="10" width="1" height="1"/><rect x="14" y="10" width="1" height="1"/><rect x="15" y="10" width="1" height="1"/><rect x="16" y="10" width="1" height="1"/><rect x="17" y="10" width="1" height="1"/><rect x="18" y="10" width="1" height="1"/><rect x="19" y="10" width="1" height="1"/><rect x="20" y="10" width="1" height="1"/><rect x="21" y="10" width="1" height="1"/><rect x="22" y="10" width="1" height="1"/><rect x="23" y="10" width="1" height="1"/><rect x="24" y="10" width="1" height="1"/><rect x="25" y="10" width="1" height="1"/><rect x="26" y="10" width="1" height="1"/><rect x="27" y="10" width="1" height="1"/><rect x="28" y="10" width="1" height="1"/><rect x="2" y="11" width="1" height="1"/><rect x="29" y="11" width="1" height="1"/><rect x="2" y="12" width="1" height="1"/><rect x="12" y="12" width="1" height="1"/><rect x="13" y="12" width="1" height="1"/><rect x="14" y="12" width="1" height="1"/><rect x="15" y="12" width="1" height="1"/><rect x="16" y="12" width="1" height="1"/><rect x="17" y="12" width="1" height="1"/><rect x="18" y="12" width="1" height="1"/><rect x="19" y="12" width="1" height="1"/><rect x="24" y="12" width="1" height="1"/><rect x="25" y="12" width="1" height="1"/><rect x="26" y="12" width="1" height="1"/><rect x="27" y="12" width="1" height="1"/><rect x="29" y="12" width="1" height="1"/><rect x="2" y="13" width="1" height="1"/><rect x="4" y="13" width="1" height="1"/><rect x="5" y="13" width="1" height="1"/><rect x="11" y="13" width="1" height="1"/><rect x="12" y="13" width="1" height="1"/><rect x="13" y="13" width="1" height="1"/><rect x="14" y="13" width="1" height="1"/><rect x="17" y="13" width="1" height="1"/><rect x="18" y="13" width="1" height="1"/><rect x="19" y="13" width="1" height="1"/><rect x="20" y="13" width="1" height="1"/><rect x="24" y="13" width="1" height="1"/><rect x="27" y="13" width="1" height="1"/><rect x="29" y="13" width="1" height="1"/><rect x="2" y="14" width="1" height="1"/><rect x="4" y="14" width="1" height="1"/><rect x="10" y="14" width="1" height="1"/><rect x="11" y="14" width="1" height="1"/><rect x="12" y="14" width="1" height="1"/><rect x="19" y="14" width="1" height="1"/><rect x="20" y="14" width="1" height="1"/><rect x="21" y="14" width="1" height="1"/><rect x="24" y="14" width="1" height="1"/><rect x="25" y="14" width="1" height="1"/><rect x="26" y="14" width="1" height="1"/><rect x="27" y="14" width="1" height="1"/><rect x="29" y="14" width="1" height="1"/><rect x="2" y="15" width="1" height="1"/><rect x="4" y="15" width="1" height="1"/><rect x="5" y="15" width="1" height="1"/><rect x="9" y="15" width="1" height="1"/><rect x="10" y="15" width="1" height="1"/><rect x="11" y="15" width="1" height="1"/><rect x="20" y="15" width="1" height="1"/><rect x="21" y="15" width="1" height="1"/><rect x="22" y="15" width="1" height="1"/><rect x="29" y="15" width="1" height="1"/><rect x="2" y="16" width="1" height="1"/><rect x="4" y="16" width="1" height="1"/><rect x="9" y="16" width="1" height="1"/><rect x="10" y="16" width="1" height="1"/><rect x="13" y="16" width="1" height="1"/><rect x="14" y="16" width="1" height="1"/><rect x="15" y="16" width="1" height="1"/><rect x="16" y="16" width="1" height="1"/><rect x="17" y="16" width="1" height="1"/><rect x="21" y="16" width="1" height="1"/><rect x="22" y="16" width="1" height="1"/><rect x="29" y="16" width="1" height="1"/><rect x="2" y="17" width="1" height="1"/><rect x="4" y="17" width="1" height="1"/><rect x="5" y="17" width="1" height="1"/><rect x="9" y="17" width="1" height="1"/><rect x="10" y="17" width="1" height="1"/><rect x="13" y="17" width="1" height="1"/><rect x="18" y="17" width="1" height="1"/><rect x="21" y="17" width="1" height="1"/><rect x="22" y="17" width="1" height="1"/><rect x="29" y="17" width="1" height="1"/><rect x="2" y="18" width="1" height="1"/><rect x="4" y="18" width="1" height="1"/><rect x="9" y="18" width="1" height="1"/><rect x="13" y="18" width="1" height="1"/><rect x="18" y="18" width="1" height="1"/><rect x="22" y="18" width="1" height="1"/><rect x="29" y="18" width="1" height="1"/><rect x="2" y="19" width="1" height="1"/><rect x="4" y="19" width="1" height="1"/><rect x="5" y="19" width="1" height="1"/><rect x="9" y="19" width="1" height="1"/><rect x="13" y="19" width="1" height="1"/><rect x="18" y="19" width="1" height="1"/><rect x="22" y="19" width="1" height="1"/><rect x="29" y="19" width="1" height="1"/><rect x="2" y="20" width="1" height="1"/><rect x="4" y="20" width="1" height="1"/><rect x="9" y="20" width="1" height="1"/><rect x="10" y="20" width="1" height="1"/><rect x="13" y="20" width="1" height="1"/><rect x="18" y="20" width="1" height="1"/><rect x="21" y="20" width="1" height="1"/><rect x="22" y="20" width="1" height="1"/><rect x="29" y="20" width="1" height="1"/><rect x="2" y="21" width="1" height="1"/><rect x="4" y="21" width="1" height="1"/><rect x="5" y="21" width="1" height="1"/><rect x="9" y="21" width="1" height="1"/><rect x="10" y="21" width="1" height="1"/><rect x="14" y="21" width="1" height="1"/><rect x="15" y="21" width="1" height="1"/><rect x="16" y="21" width="1" height="1"/><rect x="17" y="21" width="1" height="1"/><rect x="21" y="21" width="1" height="1"/><rect x="22" y="21" width="1" height="1"/><rect x="29" y="21" width="1" height="1"/><rect x="2" y="22" width="1" height="1"/><rect x="4" y="22" width="1" height="1"/><rect x="9" y="22" width="1" height="1"/><rect x="10" y="22" width="1" height="1"/><rect x="11" y="22" width="1" height="1"/><rect x="20" y="22" width="1" height="1"/><rect x="21" y="22" width="1" height="1"/><rect x="22" y="22" width="1" height="1"/><rect x="29" y="22" width="1" height="1"/><rect x="2" y="23" width="1" height="1"/><rect x="4" y="23" width="1" height="1"/><rect x="5" y="23" width="1" height="1"/><rect x="10" y="23" width="1" height="1"/><rect x="11" y="23" width="1" height="1"/><rect x="12" y="23" width="1" height="1"/><rect x="19" y="23" width="1" height="1"/><rect x="20" y="23" width="1" height="1"/><rect x="21" y="23" width="1" height="1"/><rect x="29" y="23" width="1" height="1"/><rect x="2" y="24" width="1" height="1"/><rect x="4" y="24" width="1" height="1"/><rect x="11" y="24" width="1" height="1"/><rect x="12" y="24" width="1" height="1"/><rect x="13" y="24" width="1" height="1"/><rect x="14" y="24" width="1" height="1"/><rect x="17" y="24" width="1" height="1"/><rect x="18" y="24" width="1" height="1"/><rect x="19" y="24" width="1" height="1"/><rect x="20" y="24" width="1" height="1"/><rect x="29" y="24" width="1" height="1"/><rect x="2" y="25" width="1" height="1"/><rect x="12" y="25" width="1" height="1"/><rect x="13" y="25" width="1" height="1"/><rect x="14" y="25" width="1" height="1"/><rect x="15" y="25" width="1" height="1"/><rect x="16" y="25" width="1" height="1"/><rect x="17" y="25" width="1" height="1"/><rect x="18" y="25" width="1" height="1"/><rect x="19" y="25" width="1" height="1"/><rect x="29" y="25" width="1" height="1"/><rect x="2" y="26" width="1" height="1"/><rect x="29" y="26" width="1" height="1"/><rect x="3" y="27" width="1" height="1"/><rect x="4" y="27" width="1" height="1"/><rect x="5" y="27" width="1" height="1"/><rect x="6" y="27" width="1" height="1"/><rect x="7" y="27" width="1" height="1"/><rect x="8" y="27" width="1" height="1"/><rect x="9" y="27" width="1" height="1"/><rect x="10" y="27" width="1" height="1"/><rect x="11" y="27" width="1" height="1"/><rect x="12" y="27" width="1" height="1"/><rect x="13" y="27" width="1" height="1"/><rect x="14" y="27" width="1" height="1"/><rect x="15" y="27" width="1" height="1"/><rect x="16" y="27" width="1" height="1"/><rect x="17" y="27" width="1" height="1"/><rect x="18" y="27" width="1" height="1"/><rect x="19" y="27" width="1" height="1"/><rect x="20" y="27" width="1" height="1"/><rect x="21" y="27" width="1" height="1"/><rect x="22" y="27" width="1" height="1"/><rect x="23" y="27" width="1" height="1"/><rect x="24" y="27" width="1" height="1"/><rect x="25" y="27" width="1" height="1"/><rect x="26" y="27" width="1" height="1"/><rect x="27" y="27" width="1" height="1"/><rect x="28" y="27" width="1" height="1"/></g></svg><div><h1>Kare</h1><p class="slogan">Capture, with care.</p></div></header>
-<nav><a href="index.html">Accueil · Home</a><a href="#en" data-l="en">English</a><a href="#uk" data-l="uk">English (UK)</a><a href="#fr" data-l="fr">Français</a><a href="confidentialite.html">Confidentialité · Privacy</a></nav>
-
-
+<nav class="langues"><a href="#en" data-l="en">English</a><a href="#fr" data-l="fr">Français</a><a href="#de" data-l="de">Deutsch</a><a href="#es" data-l="es">Español</a><a href="#it" data-l="it">Italiano</a><a href="#pt-BR" data-l="pt-BR">Português</a><a href="#nl" data-l="nl">Nederlands</a><a href="#ja" data-l="ja">日本語</a><a href="#zh-Hans" data-l="zh-Hans">简体中文</a><a href="#ko" data-l="ko">한국어</a></nav>
+<nav></nav>
 <section id="en" lang="en">
 <h2>Support</h2>
 <p>Kare copies the text and tables of anything on your screen. It lives in your menu bar (the camera icon): everything is one click away.</p>
@@ -59,23 +88,12 @@ nav a[data-l] { cursor: pointer; }
 <h3>FAQ</h3>
 <p><b>A shortcut does nothing.</b> Another app may be using it: open Settings…; a shortcut marked “in use” is shown there, pick another one.</p>
 <p><b>Kare asks me to check a number.</b> The text was in very small print, where text recognition can misread a digit. Zoom in on screen and capture again.</p>
-<p><b>My data?</b> Nothing leaves your Mac: see the <a href="confidentialite.html#en">privacy policy</a>.</p>
+<p><b>My data?</b> Nothing leaves your Mac: see the <a href="confidentialite.html">privacy policy</a>.</p>
 <h3>Contact</h3>
 <p>Questions, issues, ideas: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Answers in English or French.</p>
-</section><section id="uk" lang="en-GB">
-<h2>Support</h2>
-<p>Kare copies the text and tables of anything on your screen. It lives in your menu bar (the camera icon): everything is one click away.</p>
-<h3>Shortcuts</h3>
-<p><kbd>⇧⌘2</kbd> reads text from an area · <kbd>⇧⌘1</kbd> captures an area (<kbd>Space</kbd> for a window) · <kbd>⇧⌘8</kbd> scrolling capture · <kbd>⌃⌘J</kbd> reads the copied image or PDF. Change any of them in <b>Settings…</b> (<kbd>⌘,</kbd> in Kare's menu).</p>
-<h3>Allow screen recording</h3>
-<p>macOS asks for permission on your first capture. If you declined: System Settings › Privacy &amp; Security › Screen &amp; System Audio Recording › turn on Kare, then reopen Kare.</p>
-<h3>FAQ</h3>
-<p><b>A shortcut does nothing.</b> Another app may be using it: open Settings…; a shortcut marked “in use” is shown there, pick another one.</p>
-<p><b>Kare asks me to check a number.</b> The text was in very small print, where text recognition can misread a digit. Zoom in on screen and capture again.</p>
-<p><b>My data?</b> Nothing leaves your Mac: see the <a href="confidentialite.html#en">privacy policy</a>.</p>
-<h3>Contact</h3>
-<p>Questions, issues, ideas: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Answers in English or French.</p>
-</section><section id="fr" lang="fr">
+<p class="date"><a href="index.html">Home</a> · <a href="confidentialite.html">Privacy</a></p>
+</section>
+<section id="fr" lang="fr">
 <h2>Assistance</h2>
 <p>Kare copie le texte et les tableaux de tout ce qui s'affiche sur votre écran. Il vit dans la barre des menus (l'icône de l'appareil photo) : tout s'y trouve à un clic.</p>
 <h3>Les raccourcis</h3>
@@ -88,6 +106,127 @@ nav a[data-l] { cursor: pointer; }
 <p><b>Mes données ?</b> Rien ne quitte votre Mac : voir la <a href="confidentialite.html">politique de confidentialité</a>.</p>
 <h3>Contact</h3>
 <p>Une question, un problème, une idée : <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Réponse en français ou en anglais.</p>
+<p class="date"><a href="index.html">Accueil</a> · <a href="confidentialite.html">Confidentialité</a></p>
+</section>
+<section id="de" lang="de">
+<h2>Support</h2>
+<p>Kare kopiert Text und Tabellen von allem, was auf Ihrem Bildschirm erscheint. Es sitzt in der Menüleiste (das Kamerasymbol): Alles ist einen Klick entfernt.</p>
+<h3>Tastenkürzel</h3>
+<p><kbd>⇧⌘2</kbd> liest den Text eines Bereichs · <kbd>⇧⌘1</kbd> nimmt einen Bereich auf (<kbd>Leertaste</kbd> für ein Fenster) · <kbd>⇧⌘8</kbd> scrollende Aufnahme · <kbd>⌃⌘J</kbd> liest das kopierte Bild oder PDF. Alle änderbar unter <b>Einstellungen …</b> (<kbd>⌘,</kbd> im Kare-Menü).</p>
+<h3>Bildschirmaufnahme erlauben</h3>
+<p>macOS fragt bei der ersten Aufnahme nach der Erlaubnis. Falls abgelehnt: Systemeinstellungen › Datenschutz &amp; Sicherheit › Bildschirm- &amp; Systemaudioaufnahme › Kare aktivieren, dann Kare neu öffnen.</p>
+<h3>Häufige Fragen</h3>
+<p><b>Ein Kürzel tut nichts.</b> Vielleicht nutzt eine andere App es: Öffnen Sie die Einstellungen …; ein „belegtes“ Kürzel wird dort angezeigt, wählen Sie ein anderes.</p>
+<p><b>Kare bittet mich, eine Zahl zu prüfen.</b> Der Text war sehr klein, wo die Erkennung eine Ziffer falsch lesen kann. Vergrößern Sie auf dem Bildschirm und nehmen Sie erneut auf.</p>
+<p><b>Meine Daten?</b> Nichts verlässt Ihren Mac: siehe <a href="confidentialite.html">Datenschutzerklärung</a>.</p>
+<h3>Kontakt</h3>
+<p>Fragen, Probleme, Ideen: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Antworten auf Englisch oder Französisch.</p>
+<p class="date"><a href="index.html">Startseite</a> · <a href="confidentialite.html">Datenschutz</a></p>
+</section>
+<section id="es" lang="es">
+<h2>Soporte</h2>
+<p>Kare copia el texto y las tablas de todo lo que aparece en tu pantalla. Vive en la barra de menús (el icono de la cámara): todo está a un clic.</p>
+<h3>Atajos de teclado</h3>
+<p><kbd>⇧⌘2</kbd> lee el texto de una zona · <kbd>⇧⌘1</kbd> captura una zona (<kbd>Espacio</kbd> para una ventana) · <kbd>⇧⌘8</kbd> captura con desplazamiento · <kbd>⌃⌘J</kbd> lee la imagen o el PDF copiados. Todos se cambian en <b>Ajustes…</b> (<kbd>⌘,</kbd> en el menú de Kare).</p>
+<h3>Permitir la grabación de pantalla</h3>
+<p>macOS pide permiso en la primera captura. Si lo rechazaste: Ajustes del Sistema › Privacidad y seguridad › Grabación de pantalla y audio del sistema › activa Kare y vuelve a abrir Kare.</p>
+<h3>Preguntas frecuentes</h3>
+<p><b>Un atajo no hace nada.</b> Puede que otra app lo use: abre Ajustes…; allí se indica un atajo «en uso», elige otro.</p>
+<p><b>Kare me pide comprobar una cifra.</b> El texto estaba en letra muy pequeña, donde el reconocimiento puede equivocarse en un dígito. Amplía en pantalla y captura de nuevo.</p>
+<p><b>¿Mis datos?</b> Nada sale de tu Mac: consulta la <a href="confidentialite.html">política de privacidad</a>.</p>
+<h3>Contacto</h3>
+<p>Preguntas, problemas, ideas: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Respuesta en inglés o francés.</p>
+<p class="date"><a href="index.html">Inicio</a> · <a href="confidentialite.html">Privacidad</a></p>
+</section>
+<section id="it" lang="it">
+<h2>Assistenza</h2>
+<p>Kare copia il testo e le tabelle di tutto ciò che appare sullo schermo. Vive nella barra dei menu (l'icona della fotocamera): tutto è a un clic.</p>
+<h3>Scorciatoie</h3>
+<p><kbd>⇧⌘2</kbd> legge il testo di un'area · <kbd>⇧⌘1</kbd> cattura un'area (<kbd>Spazio</kbd> per una finestra) · <kbd>⇧⌘8</kbd> cattura a scorrimento · <kbd>⌃⌘J</kbd> legge l'immagine o il PDF copiati. Si cambiano tutte in <b>Impostazioni…</b> (<kbd>⌘,</kbd> nel menu di Kare).</p>
+<h3>Consentire la registrazione dello schermo</h3>
+<p>macOS chiede il permesso alla prima cattura. Se l'hai rifiutato: Impostazioni di Sistema › Privacy e sicurezza › Registrazione schermo e audio di sistema › attiva Kare, poi riapri Kare.</p>
+<h3>Domande frequenti</h3>
+<p><b>Una scorciatoia non fa nulla.</b> Forse un'altra app la usa: apri Impostazioni…; una scorciatoia «in uso» vi è segnalata, scegline un'altra.</p>
+<p><b>Kare mi chiede di verificare una cifra.</b> Il testo era in caratteri molto piccoli, dove il riconoscimento può sbagliare una cifra. Ingrandisci sullo schermo e cattura di nuovo.</p>
+<p><b>I miei dati?</b> Nulla lascia il tuo Mac: vedi l'<a href="confidentialite.html">informativa sulla privacy</a>.</p>
+<h3>Contatto</h3>
+<p>Domande, problemi, idee: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Risposte in inglese o francese.</p>
+<p class="date"><a href="index.html">Home</a> · <a href="confidentialite.html">Privacy</a></p>
+</section>
+<section id="pt-BR" lang="pt-BR">
+<h2>Suporte</h2>
+<p>O Kare copia o texto e as tabelas de tudo o que aparece na sua tela. Ele fica na barra de menus (o ícone da câmera): tudo a um clique.</p>
+<h3>Atalhos</h3>
+<p><kbd>⇧⌘2</kbd> lê o texto de uma área · <kbd>⇧⌘1</kbd> captura uma área (<kbd>Espaço</kbd> para uma janela) · <kbd>⇧⌘8</kbd> captura com rolagem · <kbd>⌃⌘J</kbd> lê a imagem ou o PDF copiados. Todos mudam em <b>Ajustes…</b> (<kbd>⌘,</kbd> no menu do Kare).</p>
+<h3>Permitir a gravação de tela</h3>
+<p>O macOS pede permissão na primeira captura. Se você recusou: Ajustes do Sistema › Privacidade e segurança › Gravação de tela e áudio do sistema › ative o Kare e reabra o Kare.</p>
+<h3>Perguntas frequentes</h3>
+<p><b>Um atalho não faz nada.</b> Outro app pode estar usando: abra Ajustes…; um atalho «em uso» aparece indicado lá, escolha outro.</p>
+<p><b>O Kare pede para conferir um número.</b> O texto estava em letras muito pequenas, onde o reconhecimento pode errar um dígito. Amplie na tela e capture de novo.</p>
+<p><b>Meus dados?</b> Nada sai do seu Mac: veja a <a href="confidentialite.html">política de privacidade</a>.</p>
+<h3>Contato</h3>
+<p>Perguntas, problemas, ideias: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Respostas em inglês ou francês.</p>
+<p class="date"><a href="index.html">Início</a> · <a href="confidentialite.html">Privacidade</a></p>
+</section>
+<section id="nl" lang="nl">
+<h2>Ondersteuning</h2>
+<p>Kare kopieert de tekst en tabellen van alles wat op je scherm staat. Het zit in de menubalk (het camerasymbool): alles is één klik weg.</p>
+<h3>Toetscombinaties</h3>
+<p><kbd>⇧⌘2</kbd> leest de tekst van een gebied · <kbd>⇧⌘1</kbd> legt een gebied vast (<kbd>Spatiebalk</kbd> voor een venster) · <kbd>⇧⌘8</kbd> scrollende opname · <kbd>⌃⌘J</kbd> leest de gekopieerde afbeelding of pdf. Alles aan te passen in <b>Instellingen…</b> (<kbd>⌘,</kbd> in het menu van Kare).</p>
+<h3>Schermopname toestaan</h3>
+<p>macOS vraagt bij de eerste opname om toestemming. Als je die weigerde: Systeeminstellingen › Privacy en beveiliging › Scherm- en systeemaudio-opname › zet Kare aan en open Kare opnieuw.</p>
+<h3>Veelgestelde vragen</h3>
+<p><b>Een toetscombinatie doet niets.</b> Misschien gebruikt een andere app hem: open Instellingen…; een combinatie «in gebruik» wordt daar getoond, kies een andere.</p>
+<p><b>Kare vraagt een cijfer te controleren.</b> De tekst was heel klein, waar de herkenning een cijfer verkeerd kan lezen. Zoom in op het scherm en leg opnieuw vast.</p>
+<p><b>Mijn gegevens?</b> Niets verlaat je Mac: zie het <a href="confidentialite.html">privacybeleid</a>.</p>
+<h3>Contact</h3>
+<p>Vragen, problemen, ideeën: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. Antwoord in het Engels of Frans.</p>
+<p class="date"><a href="index.html">Home</a> · <a href="confidentialite.html">Privacy</a></p>
+</section>
+<section id="ja" lang="ja">
+<h2>サポート</h2>
+<p>Kareは、画面に表示されているあらゆるものから文字と表をコピーします。メニューバー（カメラのアイコン）にあり、すべてワンクリックで使えます。</p>
+<h3>ショートカット</h3>
+<p><kbd>⇧⌘2</kbd> 範囲の文字を読み取る · <kbd>⇧⌘1</kbd> 範囲をキャプチャ（<kbd>スペース</kbd>でウインドウ） · <kbd>⇧⌘8</kbd> スクロールキャプチャ · <kbd>⌃⌘J</kbd> コピーした画像やPDFを読み取る。すべて<b>設定…</b>（Kareのメニューの<kbd>⌘,</kbd>）で変更できます。</p>
+<h3>画面収録を許可する</h3>
+<p>最初のキャプチャで、macOSが許可を求めます。拒否した場合：システム設定 › プライバシーとセキュリティ › 画面とシステムオーディオの録音 › Kareをオンにして、Kareを開き直してください。</p>
+<h3>よくある質問</h3>
+<p><b>ショートカットが反応しません。</b> ほかのアプリが使っている可能性があります。設定…を開くと「使用中」と表示されるので、別のものを選んでください。</p>
+<p><b>Kareが数字の確認を求めます。</b> 文字がとても小さく、数字を読み間違えやすい状態でした。画面を拡大して、もう一度キャプチャしてください。</p>
+<p><b>データは？</b> Macの外には何も出ません。<a href="confidentialite.html">プライバシーポリシー</a>をご覧ください。</p>
+<h3>お問い合わせ</h3>
+<p>ご質問・不具合・ご要望：<a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>。英語またはフランス語で回答します。</p>
+<p class="date"><a href="index.html">ホーム</a> · <a href="confidentialite.html">プライバシー</a></p>
+</section>
+<section id="zh-Hans" lang="zh-Hans">
+<h2>支持</h2>
+<p>Kare 可以复制屏幕上任何内容中的文字和表格。它位于菜单栏（相机图标）：一切都只需点按一下。</p>
+<h3>快捷键</h3>
+<p><kbd>⇧⌘2</kbd> 读取区域中的文字 · <kbd>⇧⌘1</kbd> 截取区域（按<kbd>空格键</kbd>截取窗口） · <kbd>⇧⌘8</kbd> 滚动截图 · <kbd>⌃⌘J</kbd> 读取已拷贝的图像或 PDF。都可在<b>设置…</b>中更改（Kare 菜单中的 <kbd>⌘,</kbd>）。</p>
+<h3>允许屏幕录制</h3>
+<p>首次截图时，macOS 会请求权限。如果你拒绝了：系统设置 › 隐私与安全性 › 屏幕与系统音频录制 › 打开 Kare，然后重新打开 Kare。</p>
+<h3>常见问题</h3>
+<p><b>快捷键没有反应。</b> 可能被其他 App 占用：打开设置…，被占用的快捷键会在那里标出，换一个即可。</p>
+<p><b>Kare 让我核对一个数字。</b> 文字非常小，识别可能会读错一个数字。请放大屏幕上的内容，再截取一次。</p>
+<p><b>我的数据？</b> 没有任何内容离开你的 Mac：请参阅<a href="confidentialite.html">隐私政策</a>。</p>
+<h3>联系</h3>
+<p>问题、故障、想法：<a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>。以英语或法语回复。</p>
+<p class="date"><a href="index.html">首页</a> · <a href="confidentialite.html">隐私</a></p>
+</section>
+<section id="ko" lang="ko">
+<h2>지원</h2>
+<p>Kare는 화면에 보이는 모든 것에서 텍스트와 표를 복사합니다. 메뉴 막대(카메라 아이콘)에 있어 모든 기능이 한 번의 클릭이면 됩니다.</p>
+<h3>단축키</h3>
+<p><kbd>⇧⌘2</kbd> 영역의 텍스트 읽기 · <kbd>⇧⌘1</kbd> 영역 캡처(창은 <kbd>스페이스바</kbd>) · <kbd>⇧⌘8</kbd> 스크롤 캡처 · <kbd>⌃⌘J</kbd> 복사한 이미지나 PDF 읽기. 모두 <b>설정…</b>(Kare 메뉴의 <kbd>⌘,</kbd>)에서 바꿀 수 있습니다.</p>
+<h3>화면 기록 허용</h3>
+<p>첫 캡처 때 macOS가 권한을 요청합니다. 거부했다면: 시스템 설정 › 개인정보 보호 및 보안 › 화면 및 시스템 오디오 기록 › Kare를 켠 다음 Kare를 다시 여세요.</p>
+<h3>자주 묻는 질문</h3>
+<p><b>단축키가 작동하지 않습니다.</b> 다른 앱이 사용 중일 수 있습니다. 설정…을 열면 «사용 중»으로 표시되니 다른 것을 고르세요.</p>
+<p><b>Kare가 숫자를 확인하라고 합니다.</b> 텍스트가 매우 작아 숫자를 잘못 읽을 수 있는 상태였습니다. 화면을 확대하고 다시 캡처하세요.</p>
+<p><b>내 데이터는?</b> Mac 밖으로 나가는 것은 없습니다. <a href="confidentialite.html">개인정보 처리방침</a>을 참고하세요.</p>
+<h3>문의</h3>
+<p>질문, 문제, 아이디어: <a href="mailto:kare.capture@gmail.com">kare.capture@gmail.com</a>. 영어 또는 프랑스어로 답변합니다.</p>
+<p class="date"><a href="index.html">홈</a> · <a href="confidentialite.html">개인정보</a></p>
 </section>
 
 </main></body></html>
